@@ -1,7 +1,7 @@
 var color = "#000000"
 
 document.addEventListener("DOMContentLoaded", function() {
-    var socket = new SockJS('http://server.mappington.org:9009/ws');
+    var socket = new SockJS('https://server.mappington.org:9009/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
