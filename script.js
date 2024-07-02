@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 var clientPx = document.getElementById(px.id);
                 clientPx.style.backgroundColor = px.color;
             });
-            console.log(pixels.body);
         });
         stompClient.send("/app/reload")
     });
