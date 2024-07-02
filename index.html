@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to Color Squares</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        if (window.location.protocol === "https:") {
+            window.location.replace("http://" + window.location.hostname + window.location.pathname + window.location.search);
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <!-- Squares will be dynamically created here -->
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <!-- Input field for hex color code -->
+    <label for="hexColor">Color</label>
+    <input type="color" id="hexColor" name="hexColor" value="#000000">
+    <br><br>
+
+</body>
+</html>
