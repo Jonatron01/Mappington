@@ -3,6 +3,7 @@ var color = "#000000"
 document.addEventListener("DOMContentLoaded", function() {
     var socket = new SockJS('https://server.mappington.org:9009/ws');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe("/update/pixels", function (pixel) {
