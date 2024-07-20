@@ -51,7 +51,7 @@ public class WebSocketController {
         String sessionId = smha.getSessionId();
         System.out.println(sessionId);
         simpMsg.convertAndSend("/update/reload/" + sessionId, pixelRepository.findAll());
-        simpMsg.convertAndSend("/update/reload/" + sessionId, "{\"key\": \"" + sessionId + "\", \"valid\": \"true\"}");
+        simpMsg.convertAndSend("/update/key/" + sessionId, "{\"key\": \"" + sessionId + "\", \"valid\": \"true\"}");
     }
     @MessageMapping("/reloadmc")
     public void reloadMCMap() throws Exception {

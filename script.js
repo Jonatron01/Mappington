@@ -1,5 +1,5 @@
 var color = "#000000"
-var key = ""
+var key
 document.addEventListener("DOMContentLoaded", function() {
     var socket = new SockJS('https://server.mappington.org:9009/ws');
     stompClient = Stomp.over(socket);
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         stompClient.subscribe("/update/key/" + sessionId, function (key) {
             key = JSON.parse(key.body);
         });
+        stompClient.send("/app/reload")
     });
     const container = document.getElementById('container');
     const squares = createSquares(128); // Create 10x10 grid of squares
