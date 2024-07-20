@@ -11,10 +11,8 @@ import com.Jonatron01.Mappington.model.Pixel;
 import com.Jonatron01.Mappington.repository.PixelRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter; 
-
 @Controller
 public class WebSocketController {
-
     private final PixelRepository pixelRepository;
     @Autowired
     private SimpMessagingTemplate simpMsg;
@@ -44,5 +42,9 @@ public class WebSocketController {
         String sessionId = smha.getSessionId();   
         System.out.println(sessionId);
         simpMsg.convertAndSend("/update/reload/" + sessionId, pixelRepository.findAll());
+    }
+    @MessageMapping("/reloadmc")
+    public void reloadMCMap() throws Exception {
+        simpMsg.convertAndSend("/update/reloadmc/", pixelRepository.findAll());
     }
 }

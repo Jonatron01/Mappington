@@ -26,10 +26,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     const container = document.getElementById('container');
     const squares = createSquares(128); // Create 10x10 grid of squares
-
     squares.forEach(square => {
         container.appendChild(square);
-
         square.addEventListener('click', function() {
             // Toggle color on click
             square.style.backgroundColor = color;
@@ -40,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
             })))
         });
     });
-
     function createSquares(num) {
         const squares = [];
         for (let i = 1; i <= num * num; i++) {
@@ -51,15 +48,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return squares;
     }
-
     const hex = document.getElementById('hexColor');
     function updateSelectedColor() {
         color = hex.value;
-
     }
-
-
-
     hex.addEventListener('input', updateSelectedColor);
-
 });
