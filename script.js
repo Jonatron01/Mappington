@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 clientPx.style.backgroundColor = px.color;
             });
         });
-        key = JSON.parse(stompClient.send("/app/reload").body)
+        stompClient.subscribe("/update/key/" + sessionId, function (key) {
+            key = JSON.parse(key.body);
+        });
     });
     const container = document.getElementById('container');
     const squares = createSquares(128); // Create 10x10 grid of squares

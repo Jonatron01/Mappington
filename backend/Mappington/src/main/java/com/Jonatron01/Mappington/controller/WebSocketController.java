@@ -42,15 +42,16 @@ public class WebSocketController {
             return ow.writeValueAsString(px);
         }
         else {
+            System.out.print("we got trolled on this one");
             return null;
         }
     }
     @MessageMapping("/reload")
-    public String reloadMap(SimpMessageHeaderAccessor smha) throws Exception {
+    public void reloadMap(SimpMessageHeaderAccessor smha) throws Exception {
         String sessionId = smha.getSessionId();
         System.out.println(sessionId);
         simpMsg.convertAndSend("/update/reload/" + sessionId, pixelRepository.findAll());
-        return "{\"key\": \"" + sessionId + "\", \"valid\": \"true\"}";
+        simpMsg.convertAndSend("/update/reload/" + sessionId, "{\"key\": \"" + sessionId + "\", \"valid\": \"true\"}");
     }
     @MessageMapping("/reloadmc")
     public void reloadMCMap() throws Exception {
