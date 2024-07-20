@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     const container = document.getElementById('container');
     const squares = createSquares(128);
-
+    console.log(key)
     squares.forEach(square => {
         container.appendChild(square);
 
