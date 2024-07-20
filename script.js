@@ -1,5 +1,5 @@
 var color = "#000000"
-var key = {}
+var keyword = {}
 document.addEventListener("DOMContentLoaded", function() {
     var socket = new SockJS('https://server.mappington.org:9009/ws');
     stompClient = Stomp.over(socket);
@@ -27,24 +27,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 clientPx.style.backgroundColor = px.color;
             });
         });
-        stompClient.subscribe("/update/key/" + sessionId, function (key) {
+        stompClient.subscribe("/update/key/" + sessionId, function (keyword) {
             console.log("ive got the key")
-            console.log(key.body)
-            key = JSON.parse(key.body);
-            console.log(key)
+            console.log(keyword.body)
+            keyword = JSON.parse(keyword.body);
+            console.log(keyword)
         });
         stompClient.send("/app/reload")
         const container = document.getElementById('container');
         const squares = createSquares(128);
-        console.log(key)
+        console.log(keyword)
         squares.forEach(square => {
             container.appendChild(square);
 
             square.addEventListener('click', function() {
                 // Toggle color on click
                 square.style.backgroundColor = color;
-                console.log(key)
-                console.log(stompClient.send("/app/pixel", key, JSON.stringify({
+                console.log(keyword)
+                console.log(stompClient.send("/app/pixel", keyword, JSON.stringify({
                     'id': square.getAttribute("id"),
                     'author': '',
                     'color': color
