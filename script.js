@@ -1,5 +1,5 @@
 var color = "#000000"
-
+var keyword = {}
 document.addEventListener("DOMContentLoaded", function() {
     var socket = new SockJS('https://server.mappington.org:9009/ws');
     stompClient = Stomp.over(socket);
@@ -7,9 +7,14 @@ document.addEventListener("DOMContentLoaded", function() {
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe("/update/pixels", function (pixel) {
-            var px = JSON.parse(pixel.body);
-            var clientPx = document.getElementById(px.id);
-            clientPx.style.backgroundColor = px.color;
+            if (pixel.body != null) {
+                var px = JSON.parse(pixel.body);
+                var clientPx = document.getElementById(px.id);
+                clientPx.style.backgroundColor = px.color;
+            }
+            else {
+                console.log("trolled")
+            }
         });
         var socketUrl = socket._transport.url;
         var sessionId = /([^\/]+)\/websocket/.exec(socketUrl)[1];
@@ -22,24 +27,34 @@ document.addEventListener("DOMContentLoaded", function() {
                 clientPx.style.backgroundColor = px.color;
             });
         });
+        stompClient.subscribe("/update/key/" + sessionId, function (keyword) {
+            console.log("ive got the key")
+            console.log(keyword.body)
+            keyword = JSON.parse(keyword.body);
+            console.log(keyword)
+        });
         stompClient.send("/app/reload")
-    });
-    const container = document.getElementById('container');
-    const squares = createSquares(128); // Create 10x10 grid of squares
+        const container = document.getElementById('container');
+        const squares = createSquares(128);
+        console.log(keyword)
+        squares.forEach(square => {
+            container.appendChild(square);
 
-    squares.forEach(square => {
-        container.appendChild(square);
-
-        square.addEventListener('click', function() {
-            // Toggle color on click
-            square.style.backgroundColor = color;
-            console.log(stompClient.send("/app/pixel", {}, JSON.stringify({
-                'id': square.getAttribute("id"),
-                'author': '',
-                'color': color
-            })))
+            square.addEventListener('click', function() {
+                // Toggle color on click
+                square.style.backgroundColor = color;
+                console.log(keyword)
+                console.log(stompClient.send("/app/pixel", keyword, JSON.stringify({
+                    'id': square.getAttribute("id"),
+                    'author': '',
+                    'color': color
+                })))
+            });
+            const hex = document.getElementById('hexColor');
+            hex.addEventListener('input', updateSelectedColor);
         });
     });
+    
 
     function createSquares(num) {
         const squares = [];
@@ -52,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return squares;
     }
 
-    const hex = document.getElementById('hexColor');
+    
     function updateSelectedColor() {
         color = hex.value;
 
@@ -60,6 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    hex.addEventListener('input', updateSelectedColor);
+    
 
 });
