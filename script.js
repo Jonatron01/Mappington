@@ -29,13 +29,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         stompClient.subscribe("/update/key/" + sessionId, function (key) {
             console.log("ive got the key")
-            console.log(key)
+            console.log(key.body)
             key = JSON.parse(key.body);
+            console.log(key)
         });
         stompClient.send("/app/reload")
     });
     const container = document.getElementById('container');
-    const squares = createSquares(128); // Create 10x10 grid of squares
+    const squares = createSquares(128);
 
     squares.forEach(square => {
         container.appendChild(square);
