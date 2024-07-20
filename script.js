@@ -50,27 +50,31 @@ document.addEventListener("DOMContentLoaded", function() {
                     'color': color
                 })))
             });
+            const hex = document.getElementById('hexColor');
+            hex.addEventListener('input', updateSelectedColor);
         });
+    });
+    
 
-        function createSquares(num) {
-            const squares = [];
-            for (let i = 1; i <= num * num; i++) {
-                const square = document.createElement('div');
-                square.classList.add("square");
-                square.setAttribute('id',i);
-                squares.push(square);
-            }
-            return squares;
+    function createSquares(num) {
+        const squares = [];
+        for (let i = 1; i <= num * num; i++) {
+            const square = document.createElement('div');
+            square.classList.add("square");
+            square.setAttribute('id',i);
+            squares.push(square);
         }
+        return squares;
+    }
 
-        const hex = document.getElementById('hexColor');
-        function updateSelectedColor() {
-            color = hex.value;
+    
+    function updateSelectedColor() {
+        color = hex.value;
 
-        }
+    }
 
 
 
-        hex.addEventListener('input', updateSelectedColor);
-        });
+    
+
 });
