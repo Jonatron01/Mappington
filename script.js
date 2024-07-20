@@ -34,44 +34,43 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(key)
         });
         stompClient.send("/app/reload")
-    });
-    const container = document.getElementById('container');
-    const squares = createSquares(128);
-    console.log(key)
-    squares.forEach(square => {
-        container.appendChild(square);
+        const container = document.getElementById('container');
+        const squares = createSquares(128);
+        console.log(key)
+        squares.forEach(square => {
+            container.appendChild(square);
 
-        square.addEventListener('click', function() {
-            // Toggle color on click
-            square.style.backgroundColor = color;
-            console.log(key)
-            console.log(stompClient.send("/app/pixel", key, JSON.stringify({
-                'id': square.getAttribute("id"),
-                'author': '',
-                'color': color
-            })))
+            square.addEventListener('click', function() {
+                // Toggle color on click
+                square.style.backgroundColor = color;
+                console.log(key)
+                console.log(stompClient.send("/app/pixel", key, JSON.stringify({
+                    'id': square.getAttribute("id"),
+                    'author': '',
+                    'color': color
+                })))
+            });
         });
-    });
 
-    function createSquares(num) {
-        const squares = [];
-        for (let i = 1; i <= num * num; i++) {
-            const square = document.createElement('div');
-            square.classList.add("square");
-            square.setAttribute('id',i);
-            squares.push(square);
+        function createSquares(num) {
+            const squares = [];
+            for (let i = 1; i <= num * num; i++) {
+                const square = document.createElement('div');
+                square.classList.add("square");
+                square.setAttribute('id',i);
+                squares.push(square);
+            }
+            return squares;
         }
-        return squares;
-    }
 
-    const hex = document.getElementById('hexColor');
-    function updateSelectedColor() {
-        color = hex.value;
+        const hex = document.getElementById('hexColor');
+        function updateSelectedColor() {
+            color = hex.value;
 
-    }
+        }
 
 
 
-    hex.addEventListener('input', updateSelectedColor);
-
+        hex.addEventListener('input', updateSelectedColor);
+        });
 });
